@@ -1,95 +1,63 @@
-# Neural Vansh Personal Brand Website
+# Neural Vansh
 
-A production-style React + Tailwind CSS website for **Neural Vansh / Vansh Gaikwad**.
+Source for [www.neuralvansh.online](https://www.neuralvansh.online). An editorial website for Vansh Gaikwad, covering content and AI-assisted video editing, websites, and practical AI workflows.
 
-## What is included
+## Pages
 
-- Multi-page React website using hash navigation
-- Home, AI Clarity & Execution, Services, Tools, Portfolio, Resources, About, and Contact pages
-- Premium light AI visual direction using the existing Neural Vansh palette
-- Improved typography, spacing, service copy, CTAs, and conversion structure
-- WhatsApp CTA links with pre-filled messages
-- Uploaded Neural Vansh logo asset
-- Vansh image cutouts for the first two portraits
-- Original robot-lab image used in the Tools page
-- Placeholder portfolio and resource cards ready to replace later
-- AI Clarity & Execution landing page with interactive starting-point selector, service recommender, starter services, demos, FAQ, process, trust section, and enquiry form
-- Enquiry form stores submissions in `localStorage` and opens WhatsApp with a pre-filled message to `+91 8698049031`
+- `/` Home with a starting-point selector, service paths and real examples.
+- `/services` Three service areas, deliverables and relevant examples.
+- `/approach` Process, an interactive workflow and a reel breakdown.
+- `/about` Vansh's story and his co-founder role at Presenzo Media.
+- `/contact` Enquiry form, email and direct WhatsApp.
+- `/privacy` and `/terms` Plain-language site policies.
 
-## Tech stack
+There are no public prices, invented testimonials or fabricated client outcomes. Examples are this website and self-initiated Neural Vansh reels. Tools, Portfolio and Resources have been removed from navigation. Old path and hash links have sensible destinations.
 
-- React
-- Vite
-- Tailwind CSS
-- Framer Motion
-- lucide-react
+## Development
 
-## Run locally
-
-```bash
-npm install
+```sh
+npm ci
 npm run dev
-```
-
-Open the local URL that Vite shows, usually:
-
-```bash
-http://localhost:5173
-```
-
-## Build for production
-
-```bash
+npm test
+npm run format:check
 npm run build
 npm run preview
 ```
 
-## Deploy
+The build creates a client bundle and uses React server rendering to generate static HTML for each page. Direct URLs have distinct headings, descriptions, canonical links and social metadata before JavaScript runs. `vercel.json` enables clean URLs and publishes `dist`.
 
-You can deploy this to Vercel or Netlify.
+## Deployment
 
-### Vercel
+The repository is connected to the `neuralvansh` Vercel project. Branches get previews. Merging the approved version into `main` triggers production deployment for the custom domain.
 
-1. Upload this folder to GitHub.
-2. Import the repository in Vercel.
-3. Build command: `npm run build`
-4. Output directory: `dist`
+The GitHub workflow validates formatting, enquiry-handler tests and the build. The old GitHub Pages deployment was replaced because this site uses root paths and a Vercel serverless enquiry endpoint.
 
-### Netlify
+## Enquiries
 
-1. Upload this folder to GitHub or drag the folder to Netlify.
-2. Build command: `npm run build`
-3. Publish directory: `dist`
+`api/enquiry.js` validates the form and sends submissions to `neuralvansh@gmail.com` through FormSubmit. The owner completed its one-time activation during setup. The UI only reports acceptance after the provider accepts the request. On an error, form values are preserved and the visitor can send the same details on WhatsApp.
 
-## Edit key details
+The endpoint includes consent checks, a honeypot, timing checks, size limits, same-origin checks and basic per-instance request throttling. It does not log enquiry contents. Visitor data is not saved to browser local storage.
 
-- WhatsApp number and messages: `src/App.jsx`
-- Contact links: `src/App.jsx`
-- Services/offers: `src/App.jsx`
-- AI Clarity & Execution page offers/prices: `starterServices` in `src/App.jsx`
-- Enquiry form fields and WhatsApp message: `EnquiryForm` in `src/App.jsx`
-- Portfolio cards: `src/App.jsx`
-- Resources cards: `src/App.jsx`
-- Images: `src/assets/`
+Direct WhatsApp targets `+91 8698049031`. The visitor chooses to send the prepared message. Automatic owner alerts are not enabled because the owner chose email and direct WhatsApp for now.
 
-## Enquiry form behavior
+For a future verified Resend sender, securely set `RESEND_API_KEY` and `ENQUIRY_FROM_EMAIL` in Vercel. For future Meta WhatsApp Business alerts, use the server-only variables in `.env.example` and an approved four-parameter utility template. Test with the authorised owner recipient. Never commit credentials or use `VITE_` variables for secrets.
 
-The AI Clarity form is frontend-only:
+## Design and media
 
-1. It saves the enquiry in browser `localStorage` under `neural-vansh-enquiries`.
-2. It opens WhatsApp with a pre-filled message to `+91 8698049031`.
-3. The visitor still needs to tap/send the WhatsApp message.
+- Self-hosted Manrope and Instrument Serif fonts.
+- Navy, sky blue, coral and pale neutral surfaces.
+- Square controls, editorial service rows, staged entrances and section reveals.
+- Reduced-motion support, keyboard controls and a responsive menu.
+- User-provided Presenzo logo and Neural Vansh videos.
+- An editorial portrait made with the built-in image-generation tool from the user-provided portrait, preserving identity and replacing the futuristic background with a plain backdrop.
+- An actual screenshot of this redesign used as its website example.
 
-For automatic backend delivery later, connect the form to Formspree, Google Sheets, Supabase, or an approved WhatsApp Business API provider. The TODO comment is in `src/App.jsx` inside `EnquiryForm`.
+Video examples have local captions and native controls. Keep them credited as self-initiated work unless the owner authorises other work for public use.
 
-## Production updates
+## Editing locations
 
-This repository is connected to the `neuralvansh` Vercel project. Vercel builds branch previews for review and deploys production updates from `main`.
-
-The version-controlled `vercel.json` installs with `npm ci`, builds with `npm run build`, and publishes `dist`. The homepage hero is in `HomePage` in `src/App.jsx`.
-
-The existing GitHub Pages workflow also builds the application before publishing `dist`, using a relative asset base for its project URL.
-
-## Notes
-
-The site uses the existing Neural Vansh light-tech palette and does not introduce a new color palette. The focus is clarity, conversion, services, resources, portfolio, and personal-brand trust.
+- `src/content.js`: metadata, service details, starting points and FAQs.
+- `src/Site.jsx`: pages, navigation, examples, diagrams and form.
+- `src/site.css`: typography, layout, colour, motion and responsive rules.
+- `api/enquiry.js`: validation and delivery.
+- `public/media`: optimised images, reels and caption files.
