@@ -30,17 +30,17 @@ The build creates a client bundle and uses React server rendering to generate st
 
 The repository is connected to the `neuralvansh` Vercel project. Branches get previews. Merging the approved version into `main` triggers production deployment for the custom domain.
 
-The GitHub workflow validates formatting, enquiry-handler tests and the build. The old GitHub Pages deployment was replaced because this site uses root paths and a Vercel serverless enquiry endpoint.
+The GitHub workflow validates formatting, enquiry-delivery tests and the build. Production is hosted on Vercel; the old GitHub Pages publishing workflow has been replaced with these checks.
 
 ## Enquiries
 
-`api/enquiry.js` validates the form and sends submissions to `neuralvansh@gmail.com` through FormSubmit. The owner completed its one-time activation during setup. The UI only reports acceptance after the provider accepts the request. On an error, form values are preserved and the visitor can send the same details on WhatsApp.
+`src/enquiry.js` uses FormSubmit's supported browser integration to send submissions to `neuralvansh@gmail.com`. The owner completed its one-time activation during setup. The UI only reports acceptance after the provider accepts the request. On an error, form values are preserved and the visitor can send the same details on WhatsApp.
 
-The endpoint includes consent checks, a honeypot, timing checks, size limits, same-origin checks and basic per-instance request throttling. It does not log enquiry contents. Visitor data is not saved to browser local storage.
+The form includes required fields, consent checks, length limits, a honeypot and timing checks. Delivery and spam filtering are handled by FormSubmit. The site does not log enquiry contents or save visitor data to browser local storage.
 
 Direct WhatsApp targets `+91 8698049031`. The visitor chooses to send the prepared message. Automatic owner alerts are not enabled because the owner chose email and direct WhatsApp for now.
 
-For a future verified Resend sender, securely set `RESEND_API_KEY` and `ENQUIRY_FROM_EMAIL` in Vercel. For future Meta WhatsApp Business alerts, use the server-only variables in `.env.example` and an approved four-parameter utility template. Test with the authorised owner recipient. Never commit credentials or use `VITE_` variables for secrets.
+Automatic WhatsApp alerts would require a separately authorised WhatsApp Business API integration. No notification credentials are needed or stored for this release.
 
 ## Design and media
 
@@ -59,5 +59,5 @@ Video examples have local captions and native controls. Keep them credited as se
 - `src/content.js`: metadata, service details, starting points and FAQs.
 - `src/Site.jsx`: pages, navigation, examples, diagrams and form.
 - `src/site.css`: typography, layout, colour, motion and responsive rules.
-- `api/enquiry.js`: validation and delivery.
+- `src/enquiry.js`: form validation and browser delivery.
 - `public/media`: optimised images, reels and caption files.

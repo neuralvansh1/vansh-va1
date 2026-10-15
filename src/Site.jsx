@@ -6,6 +6,7 @@ import React, {
   useState,
 } from "react";
 import { flushSync } from "react-dom";
+import { sendEnquiry } from "./enquiry";
 import {
   ArrowUpRight,
   ArrowRight,
@@ -1329,14 +1330,7 @@ function EnquiryForm() {
     if (status === "sending") return;
     setStatus("sending");
     try {
-      const response = await fetch("/api/enquiry", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ ...form, startedAt }),
-      });
-      const result = await response.json();
-      if (!response.ok || !result.accepted)
-        throw new Error("Submission was not accepted");
+      const result = await sendEnquiry({ ...form, startedAt });
       setDelivery(result);
       setStatus("success");
     } catch {
