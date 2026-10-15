@@ -1,4 +1,6 @@
 node_modules
+.site-ssr
+dist
 vite-dev.*.log
 vite-dev.pid
 qa-*.png

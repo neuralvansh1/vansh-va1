@@ -3,5 +3,12 @@
   "framework": "vite",
   "installCommand": "npm ci",
   "buildCommand": "npm run build",
-  "outputDirectory": "dist"
+  "outputDirectory": "dist",
+  "cleanUrls": true,
+  "trailingSlash": false,
+  "redirects": [
+    { "source": "/tools", "destination": "/services", "permanent": true },
+    { "source": "/portfolio", "destination": "/", "permanent": true },
+    { "source": "/resources", "destination": "/", "permanent": true }
+  ]
 }
